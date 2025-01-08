@@ -24,10 +24,17 @@ import {
 } from "lucide-react";
 
 const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return "selamat pagi sayangkuu";
-    if (hour >= 12 && hour < 15) return "selamat siang babyyy";
-    if (hour >= 15 && hour < 18) return "selamat sore cintakuu";
+    const hour = new Date().toLocaleString('en-US', { 
+        timeZone: 'Asia/Jakarta',
+        hour: 'numeric',
+        hour12: false 
+    });
+    
+    const hourNumber = parseInt(hour);
+    
+    if (hourNumber >= 5 && hourNumber < 12) return "selamat pagi sayangkuu";
+    if (hourNumber >= 12 && hourNumber < 15) return "selamat siang babyyy";
+    if (hourNumber >= 15 && hourNumber < 18) return "selamat sore cintakuu";
     return "selamat malam bubuuu";
 };
 
