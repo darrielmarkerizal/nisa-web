@@ -21,12 +21,22 @@ type MoodOption = {
 };
 
 const getCurrentPrayer = (): PrayerTime => {
-    const hour = new Date().getHours();
-    if (hour >= 4 && hour < 12) return "Subuh";
-    if (hour >= 12 && hour < 15) return "Dzuhur";
-    if (hour >= 15 && hour < 18) return "Ashar";
-    if (hour >= 18 && hour < 19) return "Maghrib";
-    return "Isya";
+    const now = new Date();
+    const hour = now.getHours();
+    const minutes = now.getMinutes();
+    const totalMinutes = (hour * 60) + minutes;
+
+    if (totalMinutes >= 240 && totalMinutes < 360) return "Subuh";
+    
+    if (totalMinutes >= 690 && totalMinutes < 900) return "Dzuhur";
+    
+    if (totalMinutes >= 900 && totalMinutes < 1070) return "Ashar";
+    
+    if (totalMinutes >= 1070 && totalMinutes < 1155) return "Maghrib";
+    
+    if (totalMinutes >= 1155) return "Isya";
+    
+    return "Isya"; 
 };
 
 const SplashScreen: React.FC = () => {
