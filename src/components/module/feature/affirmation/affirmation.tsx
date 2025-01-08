@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Heart, RefreshCcw } from "lucide-react";
+import { Heart, MessageCircle, RefreshCcw } from "lucide-react";
 import {
     Pagination,
     PaginationContent,
@@ -13,6 +13,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useRouter } from "next/navigation";
 
 type MoodAffirmation = {
     mood: string;
@@ -22,41 +23,149 @@ type MoodAffirmation = {
 
 const moodAffirmations: MoodAffirmation[] = [
     {
-        mood: "Lagi Happy",
-        emoji: "🥰",
-        affirmations: [
-            "AAAAAAA SENYUM KAMUU GEMESIN BANGETTTT SAYANGKUHHH! ✨",
-            "Kamu tuhh literal sunshinee akuuu! naur serius dehh! 🌞",
-            "SUMPAH DEHH kamu happy tuh bikin aku auto happy jugaaa! 💝",
+        "mood": "Lagi Happy",
+        "emoji": "🥰",
+        "affirmations": [
+          "AAAAAAA SENYUM KAMUU GEMESIN BANGETTTT SAYANGKUHHH! ✨",
+          "Kamu tuhh literal sunshinee akuuu! naur serius dehh! 🌞",
+          "SUMPAH DEHH kamu happy tuh bikin aku auto happy jugaaa! 💝",
+          "SENYUM KAMU = MOOD BOOSTER TERBAIK AKU! 💕",
+          "Akuuu tuh liat kamu happy langsung semangat juga! 💫",
+          "Kamu bahagia? Udah cukup bikin hariku perfect! 🥹",
+          "Happy vibes kamu tuh kayak nyebar energi positif ke semua oranggg! 🌈",
+          "Kamu tuh paket komplit, gemesin, lucu, ceria, bikin nagih! 🎁",
+          "Akuuuu bangga banget liat kamu tetep ceriaa, love you so muchh! 😘",
+          "Kamu itu alasan aku tetep senyum tiap hari~ 💖",
+          "Pipi kamu tuh makin gemes kalo lagi happy giniii! 😍",
+          "Plissss terus happy kayak gini yaaa, aku suka bangettt! 🥺",
+          "Banyak banget alasan buat aku jatuh cinta, tapi senyum kamu nomer satu! 💯",
+          "Liat kamu ketawa tuh rasanya aku udah menang lotre hidup! 😍",
+          "You're my happy pill setiap hariii, serius dehh! 💊",
+          "Ngelihat kamu ceria gini tuh auto bikin hati aku anget! 🔥",
+          "Kamu tuh kayak sinar matahari pagi, cerahhh bikin fresh seharian! 🌄",
+          "Aku tuh ga pernah bosen liat kamu happy, bikin canduu~ 🥰",
+          "Jangan lupa, kamu happy tuh adalah kebahagiaan aku jugaaa! 💌",
+          "OMG liat kamu bahagia gini tuh priceless banget buat akuuu~ 💎",
+          "Stay happy yaa, karena dunia butuh vibes positif kayak kamu! 🌍",
+          "Kamu tuh definisi cuteness overload, asli dehh! 🐣",
+          "Terus happy yaa sayang, kamu tuh bikin hari aku selalu cerahhh! 🌼",
+          "Happy kamu tuh bikin aku merasa jadi orang paling beruntung di dunia! 🏆",
+          "Kayaknya aku harus nge-save senyum kamu biar bisa aku replay terus! 📼",
+          "Plisss kalo happy jangan setengah-setengah, kasi full senyum dong! 😄",
+          "Aku jadi pengen bikin komik tentang kamu, karna happy kamu tuh inspirasi aku! ✍️",
+          "Liat kamu happy gini tuh, bikin aku merasa everything\'s gonna be okay! 🌟",
+          "Bahagia kamu itu sumber energi aku buat hadapin hari-hari! ⚡",
+          "Terus senyum yaa sayang, karna senyum kamu adalah semangat hidupku~ 💪"
         ]
     },
     {
-        mood: "Lagi Sedih",
-        emoji: "🥺",
-        affirmations: [
-            "Ayanggg jangan sedih donggg, aku disini temenin terusss kokk! 💝",
-            "IHHHH JANGAN SEDIH DONGGG, aku sayang bangetttt sama kamuuu! 🫂",
-            "Besok pasti better kokkk sayangkuhhh, aku ga akan tinggalin kamuu! 💕",
+        "mood": "Lagi Sedih",
+        "emoji": "🥺",
+        "affirmations": [
+          "Ayanggg jangan sedih donggg, aku disini temenin terusss kokk! 💝",
+          "IHHHH JANGAN SEDIH DONGGG, aku sayang bangetttt sama kamuuu! 🫂",
+          "Besok pasti better kokkk sayangkuhhh, aku ga akan tinggalin kamuu! 💕",
+          "Sedih boleh, tapi inget ya, aku selalu ada buat kamuuu! 🫶",
+          "Kamu kuat bangettt, aku bangga punya kamu sayangg! 💪",
+          "Meskipun sekarang lagi berat, kita jalanin bareng-bareng yaaa! 🚶‍♀️",
+          "Ayo sini pukpukk duluu, biar sedihnya pelan-pelan ilang~ 🤗",
+          "Kamu tuh berharga banget, jadi jangan ngerasa sendirian yaaa! 🌟",
+          "Aku tahu kamu capek, tapi aku bakal terus support kamu! 💖",
+          "Ga usah mikir sendirian, ada aku kok buat bantu kamu lewat ini semua! 💬",
+          "Hari ini emang lagi berat, tapi aku yakin kamu bakal bisa! 🌈",
+          "Apapun yang kamu rasain sekarang tuh valid, jangan dipendam sendiri yaaa! 🫂",
+          "Aku tahu kamu sedih, tapi inget yaa aku tuh bangga sama kamu selalu! 💗",
+          "Sabar sayang, badai pasti berlalu kokkk! 🌤️",
+          "Kamu nggak sendirian, aku bakal selalu jadi tempat kamu pulang! 🏡",
+          "Jangan takut, ada aku yang selalu genggam tangan kamu di sini! ✋",
+          "Kamu boleh cerita kapan aja ke aku, aku selalu dengerin kok! 👂",
+          "Ga ada yang salah sama ngerasa sedih, tapi jangan lupa aku sayang kamu yaa! 💕",
+          "Kalau kamu lelah, istirahat aja dulu, aku bakal tetep jagain kamuuu! 💤",
+          "Pelan-pelan ya sayang, semua bakal baik-baik ajaa! ✨",
+          "Aku selalu ada buat bantu kamu bangkit kapanpun kamu siap! 🤝",
+          "Jangan lupa, kamuuu tuh kuat banget walaupun kadang lupa sama itu! 🔥",
+          "Aku ga bisa janji nyelesaikan masalah kamu, tapi aku janji nemenin terusss! 🌹",
+          "Pliss jangan ngerasa gagal, kamu tuh udah hebat banget sampe titik ini! 🌟",
+          "Aku tahu kamu udah usaha sekuat tenaga, dan aku proud of you banget! 💖",
+          "Inget ya, setiap hari kamu itu berjuang, dan itu keren bangettt! 🌄",
+          "Kalau lagi butuh tempat bersandar, sini aku ada buat kamu! 🥰",
+          "Aku percaya sama kamu, dan aku yakin kamu bisa melewatinya! 💪",
+          "Jangan lupa kasih waktu buat diri kamu sendiri buat healing yaa! 🧘‍♀️",
+          "Aku cuma mau bilang, kamu ga perlu jadi sempurna buat aku sayang kamu! 💌"
+        ]
+    },      
+    {
+        "mood": "Kangen",
+        "emoji": "💘",
+        "affirmations": [
+          "AAAAA AKU JUGA KANGEN BANGETTT SAMA KAMUUU SAYANGGG! 💝",
+          "Pengen quality time sama bebeb akuuu yang paling lucu seduniaa! 🥺",
+          "SUMPAH KANGENNYA UDAH GAK KETULUNGANN NIHH! 💖",
+          "Kangen ngobrol sama kamu tentang apa aja, apalagi yang receh-receh! 😄",
+          "Aku kangen denger cerita random kamu yang selalu seru banget! 💬",
+          "Serius deh, kangen vibes kamu yang selalu bikin aku tenang~ ✨",
+          "Kayaknya aku butuh waktu lebih banyak bareng kamu biar ga kangen terus! 🕰️",
+          "Lagi nginget momen-momen seru kita, bikin kangennya makin kerasa! 🌟",
+          "Kamu tuh kayak magnet kangen deh, makin jauh makin kuat rasa kangennya! 🧲",
+          "Kangen banget ngobrol sampe lupa waktu, itu momen favorit aku banget! ⏳",
+          "Aku ga akan pernah bosen bilang aku kangen kamu terusss! 💌",
+          "Kamu jauh, tapi pikiran aku selalu tentang kamu, kangen berat! 🤍",
+          "Pengen banget ketemu lagi, biar rasa kangen ini ilang dikit~ 🚀",
+          "Bawaannya kangen mulu deh kalo sehari aja ga kontak kamu! 📱",
+          "Lagi mikirin semua hal kecil yang bikin aku selalu kangen sama kamu~ 💭",
+          "Hari tanpa kamu tuh rasanya ada yang kurang, kangen banget pokoknya! 😢",
+          "Nunggu-nunggu waktu biar bisa ketemu lagi sama kamu nih~ ⏳",
+          "Aku percaya waktu bakal bikin kita ketemu lagi, semangat yaa! 💪",
+          "Kamu tuh ada di pikiran aku terus, kangen banget sumpahhh! 😭",
+          "Lagi denger lagu favorit kita, langsung kebayang kamu deh~ 🎶",
+          "Aku kangen banget, tapi aku tau nanti kita bakal ketemu lagi kok! 🌈",
+          "Kangen ngabisin waktu bareng kamu, beneran deh nggak ada yang ngalahin itu! 🌼",
+          "Aku kangen sama caramu bikin suasana jadi seru dan penuh tawa! 😂",
+          "Susah banget nahan kangennya, pengen cepet-cepet ngobrol lagi! 💬",
+          "Aku inget banget semua hal tentang kamu, makanya kangennya nambah terus~ 🥺",
+          "Kangen sama momen-momen random yang cuma kita doang ngerti! 🌸",
+          "Lagi nge-scroll chat lama kita, duh kangennya langsung naik level! 📜",
+          "Aku percaya kangen ini cuma sementara, nanti juga kita ketemu lagi! 🔜",
+          "Kangen banget ngehabisin waktu bareng kamu, nggak ada yang lebih seru dari itu! 🕰️",
+          "Serius deh, tiap nginget kamu tuh rasanya campur aduk antara seneng dan kangen! 😍"
         ]
     },
     {
-        mood: "Kangen",
-        emoji: "💘",
-        affirmations: [
-            "AAAAA AKU JUGA KANGEN BANGETTT SAMA KAMUUU SAYANGGG! 💝",
-            "Pengen quality time sama bebeb akuuu yang paling lucu seduniaa! 🥺",
-            "SUMPAH KANGENNYA UDAH GAK KETULUNGANN NIHH! 💖",
+        "mood": "Capek",
+        "emoji": "😴",
+        "affirmations": [
+          "Istirahat dulu ya bebekkuu, jgn lupa minum air putih okayy! 💆‍♀️",
+          "PROUD BGT sama kamu udah kerja keras hari inii! virtual pat pat! 🌙",
+          "Sini sini aku pengen manjain kamu terus deh pokoknyaa! 💝",
+          "Capeknya pasti bakal ilang kok, asal jangan lupa rehat yaa! 💪",
+          "Kamu udah keren banget hari ini, aku bangga bgt sama kamu! 🌟",
+          "Tenang aja, semua lelah ini bakal terbayar suatu saat nanti~ ✨",
+          "Ga perlu buru-buru kok, istirahat yang cukup dulu yaa! 🕰️",
+          "Jangan lupa makan yang enak biar energinya balik lagi! 🍽️",
+          "Banyak banget loh yang bangga sama kamu, termasuk aku! 💖",
+          "Kamu udah melakukan yang terbaik, sekarang waktunya santai dulu~ 🍵",
+          "Rehat sebentar juga termasuk produktif kok, jangan lupa ya! 💤",
+          "Udah capek? Gapapa kok, kamu hebat banget udah sampai sejauh ini! 🏆",
+          "Aku tau kamu capek, tapi aku percaya kamu kuat banget! 🌈",
+          "Lelah itu wajar, tapi jangan lupa buat kasih waktu istirahat buat diri sendiri! 🌿",
+          "Selalu inget, aku selalu support kamu apa pun kondisinya~ 💌",
+          "Gapapa kok kalo kamu mau istirahat dulu, kamu butuh energi buat besok! 🔋",
+          "Hari ini mungkin berat, tapi kamu berhasil melaluinya, proud of you! 🎉",
+          "Kamu butuh recharge, coba santai sejenak yaa! 🌼",
+          "Jangan lupa kasih reward buat diri sendiri karena udah berjuang hari ini! 🎁",
+          "Capek itu bukti kamu udah kerja keras, istirahat dulu biar makin kuat! 💥",
+          "Aku yakin banget kamu bakal lebih semangat lagi besok! 💫",
+          "Cukup tenangin pikiranmu sebentar, biar lelahnya nggak berasa berat~ 🌌",
+          "Kamu udah banyak banget melakukan hal baik, sekarang waktunya relax! 🌴",
+          "Kalau capek, inget aja kamu ga sendirian, aku selalu ada buat dukung kamu! 👫",
+          "Jangan terlalu keras sama diri sendiri, kamu juga butuh santai kok~ 💞",
+          "Capek itu bagian dari perjalanan sukses, kamu hebat banget! 🚀",
+          "Take your time, semua bakal baik-baik aja kok, aku percaya sama kamu! 🌟",
+          "Udah banyak yang kamu lakuin, saatnya kasih waktu buat diri kamu istirahat~ 🌙",
+          "Aku tau kamu bisa melewati semua ini, tapi istirahat juga penting yaa! 🌿",
+          "Semua proses ini bakal berbuah manis kok, sabar dan jaga energi ya! 🍀"
         ]
-    },
-    {
-        mood: "Capek",
-        emoji: "😴",
-        affirmations: [
-            "Istirahat dulu ya bebekkuu, jgn lupa minum air putih okayy! 💆‍♀️",
-            "PROUD BGT sama kamu udah kerja keras hari inii! virtual pat pat! 🌙",
-            "Sini sini aku pengen manjain kamu terus deh pokoknyaa! 💝",
-        ]
-    },
+    },      
     {
         mood: "Semangat",
         emoji: "💪",
@@ -381,9 +490,21 @@ const DailyLoveScreen = () => {
         setIsDialogOpen(true);
     };
 
+    const router = useRouter();
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white p-4 md:p-8">
             <div className="max-w-4xl mx-auto space-y-8">
+                <div className="flex justify-between items-center">
+                    <Button
+                        variant="ghost"
+                        className="hover:bg-pink-50 text-pink-600"
+                        onClick={() => router.push('/')}
+                    >
+                        ← Kembali
+                    </Button>
+                </div>
+
                 <div className="text-center space-y-4">
                     <h1 className="text-3xl md:text-4xl font-bold text-pink-600">
                         kata-kata sayang buat kamu 💝
@@ -446,6 +567,20 @@ const DailyLoveScreen = () => {
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>
+
+                <div className="text-center space-y-4 p-6 bg-pink-50/50 rounded-xl">
+                    <p className="text-pink-500">
+                        Ga ada mood yang cocok? 🤔
+                    </p>
+                    <Button
+                        variant="default"
+                        className="bg-pink-500 hover:bg-pink-600"
+                        onClick={() => window.open('https://wa.me/6285155222564?text=Sayanggg, aku mau request mood baru nih!')}
+                    >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Request Mood Ke Sayang
+                    </Button>
+                </div>
 
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogContent className="max-w-[95%] sm:max-w-md md:max-w-lg bg-white rounded-xl p-6">
