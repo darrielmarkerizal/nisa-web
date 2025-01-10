@@ -55,9 +55,84 @@ interface CatMascotProps {
   reaction: string | null;
 }
 
+interface PenguinMascotProps {
+  reaction: string | null;
+}
+
 interface EnhancedInteractiveCardProps extends InteractiveCardProps {
   index: number;
 }
+
+const PenguinMascot: React.FC<PenguinMascotProps> = ({ reaction }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 2000);
+  };
+
+  return (
+    <div
+      className="fixed bottom-4 left-4 z-50 w-28 h-28 transition-all duration-300 group"
+      onClick={handleClick}
+    >
+      <div className="relative">
+        {/* Tooltip */}
+        <div className="absolute -top-16 left-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
+          klik kalo darel lagi slow resp 🥺
+        </div>
+
+        {/* Click Response */}
+        {isClicked && (
+          <div className="absolute -top-16 left-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
+            jangan marah yaa beibyy, darel pasti bales kok 💝
+          </div>
+        )}
+
+        {/* Penguin Body */}
+        <div className="relative w-24 h-24 cursor-pointer transition-transform hover:scale-110">
+          {/* Main Body */}
+          <div className="absolute inset-0 bg-[#2D3436] rounded-[70%] transform -rotate-6">
+            {/* White Belly */}
+            <div className="absolute inset-x-4 top-7 bottom-3 bg-white rounded-[60%]" />
+          </div>
+
+          {/* Wings */}
+          <div className="absolute left-0 top-6 w-6 h-12 bg-[#2D3436] rounded-l-full transform -rotate-12" />
+          <div className="absolute right-0 top-6 w-6 h-12 bg-[#2D3436] rounded-r-full transform rotate-12" />
+
+          {/* Face */}
+          <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-14 h-14">
+            {/* Eyes */}
+            <div className="absolute left-2 top-2 w-3 h-3 bg-black rounded-full">
+              <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white rounded-full" />
+            </div>
+            <div className="absolute right-2 top-2 w-3 h-3 bg-black rounded-full">
+              <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white rounded-full" />
+            </div>
+
+            {/* Beak */}
+            <div className="absolute top-5 left-1/2 transform -translate-x-1/2">
+              <div className="w-5 h-4 bg-[#FF9F1C] rounded-b-xl" />
+              <div className="w-5 h-1 bg-[#F76707] rounded-t-xl" />
+            </div>
+          </div>
+
+          {/* Feet */}
+          <div className="absolute -bottom-1 left-3 w-4 h-3 bg-[#FF9F1C] rounded-b-lg transform -rotate-12" />
+          <div className="absolute -bottom-1 right-3 w-4 h-3 bg-[#FF9F1C] rounded-b-lg transform rotate-12" />
+
+          {/* Reaction Bubble */}
+          {reaction && (
+            <div className="absolute -top-8 -right-8 bg-white p-2 rounded-lg shadow-lg transform rotate-12 animate-bounce">
+              {reaction}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CatMascot: React.FC<CatMascotProps> = ({ reaction }) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -69,41 +144,71 @@ const CatMascot: React.FC<CatMascotProps> = ({ reaction }) => {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-50 w-24 h-24 transition-all duration-300 group"
+      className="fixed bottom-4 right-4 z-50 w-28 h-28 transition-all duration-300"
       onClick={handleClick}
     >
       <div className="relative">
-        {/* Default Tooltip */}
+        {/* Tooltips */}
         <div className="absolute -top-16 right-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
           klik kalau kamu kangen aku 🥺
         </div>
 
-        {/* Click Response Tooltip */}
         {isClicked && (
           <div className="absolute -top-16 right-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
             darel juga kangen banget sama kamu 💝
           </div>
         )}
 
-        {/* Cat face */}
-        <div className="w-20 h-20 bg-gray-200 rounded-full relative transform hover:scale-110 cursor-pointer">
-          {/* Eyes */}
-          <div className="absolute top-6 left-4 w-3 h-3 bg-black rounded-full" />
-          <div className="absolute top-6 right-4 w-3 h-3 bg-black rounded-full" />
+        {/* Cat Body */}
+        <div className="w-24 h-24 relative transform hover:scale-110 transition-transform duration-300 cursor-pointer">
+          {/* Main Face */}
+          <div className="absolute inset-0 bg-[#FFE5EC] rounded-full shadow-lg">
+            {/* Inner Ears */}
+            <div className="absolute -top-3 -left-1 w-6 h-6 bg-[#FFB7C5] transform rotate-45 rounded-tl-xl" />
+            <div className="absolute -top-3 -right-1 w-6 h-6 bg-[#FFB7C5] transform -rotate-45 rounded-tr-xl" />
 
-          {/* Reaction bubble */}
+            {/* Outer Ears */}
+            <div className="absolute -top-4 -left-2 w-7 h-7 bg-[#FFE5EC] transform rotate-45 rounded-tl-xl" />
+            <div className="absolute -top-4 -right-2 w-7 h-7 bg-[#FFE5EC] transform -rotate-45 rounded-tr-xl" />
+
+            {/* Eyes */}
+            <div className="absolute top-7 left-4 w-3 h-3 bg-black rounded-full flex items-center justify-center">
+              <div className="w-1 h-1 bg-white rounded-full absolute top-0.5 left-0.5" />
+            </div>
+            <div className="absolute top-7 right-4 w-3 h-3 bg-black rounded-full flex items-center justify-center">
+              <div className="w-1 h-1 bg-white rounded-full absolute top-0.5 left-0.5" />
+            </div>
+
+            {/* Blush Marks */}
+            <div className="absolute top-10 left-2 w-4 h-2 bg-pink-200 rounded-full opacity-60" />
+            <div className="absolute top-10 right-2 w-4 h-2 bg-pink-200 rounded-full opacity-60" />
+
+            {/* Nose */}
+            <div className="absolute top-11 left-1/2 transform -translate-x-1/2 w-2.5 h-2 bg-pink-300 rounded-full" />
+
+            {/* Whiskers */}
+            <div className="absolute top-11 left-2 w-4 h-px bg-gray-400 transform -rotate-15" />
+            <div className="absolute top-12 left-2 w-4 h-px bg-gray-400" />
+            <div className="absolute top-13 left-2 w-4 h-px bg-gray-400 transform rotate-15" />
+            <div className="absolute top-11 right-2 w-4 h-px bg-gray-400 transform rotate-15" />
+            <div className="absolute top-12 right-2 w-4 h-px bg-gray-400" />
+            <div className="absolute top-13 right-2 w-4 h-px bg-gray-400 transform -rotate-15" />
+
+            {/* Mouth */}
+            <div className="absolute top-[3.25rem] left-1/2 transform -translate-x-1/2 w-2 h-2 border-b-2 border-pink-300 rounded-full" />
+          </div>
+
+          {/* Tail */}
+          <div className="absolute -bottom-2 right-0 w-8 h-12 overflow-hidden">
+            <div className="absolute bottom-0 right-2 w-4 h-12 bg-[#FFE5EC] rounded-full transform rotate-12 origin-bottom animate-[wave_2s_ease-in-out_infinite]" />
+          </div>
+
+          {/* Reaction Bubble */}
           {reaction && (
             <div className="absolute -top-8 -left-8 bg-white p-2 rounded-lg shadow-lg transform -rotate-12 animate-bounce">
               {reaction}
             </div>
           )}
-
-          {/* Ears */}
-          <div className="absolute -top-4 -left-2 w-6 h-6 bg-gray-200 transform rotate-45" />
-          <div className="absolute -top-4 -right-2 w-6 h-6 bg-gray-200 transform -rotate-45" />
-
-          {/* Nose */}
-          <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-pink-300 rounded-full" />
         </div>
       </div>
     </div>
@@ -511,6 +616,7 @@ const HomeScreen: React.FC = () => {
 
           <EnhancedFooter />
         </div>
+        <PenguinMascot reaction={catReaction} />
         <CatMascot reaction={catReaction} />
       </div>
     </>
