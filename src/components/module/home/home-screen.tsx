@@ -357,18 +357,6 @@ const menuItems: MenuItem[] = [
     route: "/wellness",
   },
   {
-    icon: Bell,
-    title: "emergency sos",
-    description: "panggilan darurat ke aku",
-    route: "/emergency",
-  },
-  {
-    icon: Brain,
-    title: "self-growth guide",
-    description: "panduan pengembangan diri",
-    route: "/self-growth",
-  },
-  {
     icon: Target,
     title: "couple goals",
     description: "target-target kita berdua",
@@ -385,18 +373,6 @@ const menuItems: MenuItem[] = [
     title: "gratitude box",
     description: "ungkapan rasa syukur",
     route: "/gratitude",
-  },
-  {
-    icon: MessageSquare,
-    title: "comfort messages",
-    description: "pesan penghibur saat sedih",
-    route: "/comfort",
-  },
-  {
-    icon: Activity,
-    title: "health assistant",
-    description: "asisten kesehatan pribadi",
-    route: "/health",
   },
   {
     icon: Clock,
