@@ -385,12 +385,6 @@ const menuItems: MenuItem[] = [
     route: "/couple-goals",
   },
   {
-    icon: Map,
-    title: "halal date planner",
-    description: "rencana kencan yang halal",
-    route: "/date-planner",
-  },
-  {
     icon: ThumbsUp,
     title: "gratitude box",
     description: "ungkapan rasa syukur",
@@ -486,6 +480,33 @@ const HomeScreen: React.FC = () => {
                 onClick={() => handleMenuClick(item.route)}
               />
             ))}
+          </div>
+
+          {/* SOS Button Section */}
+          <div className="flex flex-col items-center justify-center space-y-4 mt-8">
+            <div className="bg-pink-50 p-4 rounded-lg max-w-md text-center">
+              <p className="text-pink-500 text-sm mb-2">
+                tombol ini buat kamu yang lagi butuh perhatian dariku ya
+                sayangkuu 🥺 klik kalau kamu pen dimanja-manjain, kangen, atau
+                butuh aku sekarang jugaa!! 💝
+              </p>
+            </div>
+
+            <a
+              href="https://wa.me/85155222564?text=sayanggg%20aku%20kangen%20banget%20sama%20kamu%20sekarang%20🥺%20aku%20pen%20dimanja-manjain%20samaaa%20kamuuu%20pleasee%20fastrespp%20yaa%20sayangkuu%20aku%20butuh%20kamuuu%20sekarangg%20😭💝"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative animate-pulse"
+            >
+              <button className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition hover:scale-105 flex items-center space-x-2">
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+                </span>
+                <span className="text-xl">🆘</span>
+                <span>butuh kamu sekarang!!</span>
+              </button>
+            </a>
           </div>
 
           <EnhancedFooter />
