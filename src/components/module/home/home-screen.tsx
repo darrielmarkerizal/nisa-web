@@ -60,11 +60,33 @@ interface EnhancedInteractiveCardProps extends InteractiveCardProps {
 }
 
 const CatMascot: React.FC<CatMascotProps> = ({ reaction }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 2000);
+  };
+
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-24 h-24 transition-all duration-300">
+    <div
+      className="fixed bottom-4 right-4 z-50 w-24 h-24 transition-all duration-300 group"
+      onClick={handleClick}
+    >
       <div className="relative">
+        {/* Default Tooltip */}
+        <div className="absolute -top-16 right-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
+          klik kalau kamu kangen aku 🥺
+        </div>
+
+        {/* Click Response Tooltip */}
+        {isClicked && (
+          <div className="absolute -top-16 right-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
+            darel juga kangen banget sama kamu 💝
+          </div>
+        )}
+
         {/* Cat face */}
-        <div className="w-20 h-20 bg-gray-200 rounded-full relative transform hover:scale-110">
+        <div className="w-20 h-20 bg-gray-200 rounded-full relative transform hover:scale-110 cursor-pointer">
           {/* Eyes */}
           <div className="absolute top-6 left-4 w-3 h-3 bg-black rounded-full" />
           <div className="absolute top-6 right-4 w-3 h-3 bg-black rounded-full" />
