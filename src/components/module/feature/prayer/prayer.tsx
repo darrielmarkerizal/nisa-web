@@ -287,36 +287,41 @@ const PrayerCompanion: React.FC = () => {
 
         {/* Quran Dialog */}
         <Dialog open={isQuranDialogOpen} onOpenChange={setIsQuranDialogOpen}>
-          <DialogContent className="max-w-[95%] sm:max-w-[85%] max-h-[90vh] flex flex-col bg-white rounded-xl p-4">
-            <DialogHeader className="flex-shrink-0">
+          <DialogContent className="w-[95vw] sm:w-[85vw] h-[90vh] flex flex-col bg-white rounded-xl overflow-hidden">
+            <DialogHeader className="p-4 flex-shrink-0">
               <DialogTitle className="text-center text-pink-600 text-lg sm:text-xl md:text-2xl font-semibold">
                 {selectedSurah?.name?.transliteration?.id}
               </DialogTitle>
             </DialogHeader>
 
-            <ScrollArea className="flex-1 w-full rounded-md border my-4 min-h-0">
-              <div className="p-4 space-y-6">
-                {selectedSurah?.verses?.map((verse) => (
-                  <div
-                    key={verse.number.inSurah}
-                    className="space-y-3 p-3 rounded-lg hover:bg-pink-50 transition-colors"
-                  >
-                    <span className="text-pink-500 font-medium text-sm sm:text-base block">
-                      Ayat {verse.number.inSurah}
-                    </span>
-                    <p className="text-right text-lg sm:text-xl md:text-2xl leading-relaxed">
-                      {verse.text.arab}
-                    </p>
-                    <p className="text-xs sm:text-sm text-gray-600">
-                      {verse.translation.id}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <ScrollBar />
-            </ScrollArea>
+            <div className="flex-1 overflow-hidden px-4">
+              <ScrollArea className="h-full w-full rounded-md border">
+                <div className="p-4 space-y-6">
+                  {selectedSurah?.verses?.map((verse) => (
+                    <div
+                      key={verse.number.inSurah}
+                      className="space-y-3 p-3 rounded-lg hover:bg-pink-50 transition-colors"
+                    >
+                      <span className="text-pink-500 font-medium text-sm sm:text-base block">
+                        Ayat {verse.number.inSurah}
+                      </span>
+                      <p
+                        dir="rtl"
+                        className="text-right text-lg sm:text-xl md:text-2xl leading-relaxed"
+                      >
+                        {verse.text.arab}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-600">
+                        {verse.translation.id}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <ScrollBar />
+              </ScrollArea>
+            </div>
 
-            <div className="flex justify-between items-center gap-2 mt-2 flex-shrink-0">
+            <div className="p-4 flex justify-between items-center gap-2 flex-shrink-0 border-t">
               <Button
                 variant="outline"
                 onClick={() =>
