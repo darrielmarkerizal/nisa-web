@@ -21,6 +21,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import FlipClock from "./components/flip";
 
 // Define interfaces for our component props and data structures
 interface MenuItem {
@@ -48,6 +49,78 @@ interface InteractiveCardProps {
   item: MenuItem;
   onClick: () => void;
 }
+
+// Tambahkan di bagian interface
+interface CatMascotProps {
+  reaction: string | null;
+}
+
+interface EnhancedInteractiveCardProps extends InteractiveCardProps {
+  index: number;
+}
+
+const CatMascot: React.FC<CatMascotProps> = ({ reaction }) => {
+  return (
+    <div className="fixed bottom-4 right-4 z-50 w-24 h-24 transition-all duration-300">
+      <div className="relative">
+        {/* Cat face */}
+        <div className="w-20 h-20 bg-gray-200 rounded-full relative transform hover:scale-110">
+          {/* Eyes */}
+          <div className="absolute top-6 left-4 w-3 h-3 bg-black rounded-full" />
+          <div className="absolute top-6 right-4 w-3 h-3 bg-black rounded-full" />
+
+          {/* Reaction bubble */}
+          {reaction && (
+            <div className="absolute -top-8 -left-8 bg-white p-2 rounded-lg shadow-lg transform -rotate-12 animate-bounce">
+              {reaction}
+            </div>
+          )}
+
+          {/* Ears */}
+          <div className="absolute -top-4 -left-2 w-6 h-6 bg-gray-200 transform rotate-45" />
+          <div className="absolute -top-4 -right-2 w-6 h-6 bg-gray-200 transform -rotate-45" />
+
+          {/* Nose */}
+          <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-pink-300 rounded-full" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const EnhancedFooter: React.FC = () => {
+  return (
+    <footer className="text-center py-8 mt-8 relative">
+      <div className="absolute inset-0 bg-gradient-to-t from-pink-100/50 to-transparent" />
+      <div className="relative space-y-4">
+        <div className="flex justify-center space-x-2">
+          <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">
+            🌸
+          </span>
+          <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">
+            💝
+          </span>
+          <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">
+            🌸
+          </span>
+        </div>
+        <p className="font-pacifico text-lg text-pink-500">
+          Dibuat dengan penuh cinta
+        </p>
+        <p className="font-quicksand text-pink-400">
+          oleh Darriel Markerizal
+          <br />
+          untuk Nisa Fredlina Mahardika Saputri
+        </p>
+        <div className="pt-4">
+          <span className="inline-block bg-pink-100 px-4 py-2 rounded-full text-pink-500 font-quicksand text-sm hover:scale-105 transition-transform">
+            💕 Forever Yours 💕
+          </span>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
 // Helper function for time-based greetings
 const getGreeting = (): string => {
@@ -209,14 +282,19 @@ const LoveQuote: React.FC = () => {
 };
 
 // Interactive Card Component
-const InteractiveCard: React.FC<InteractiveCardProps> = ({ item, onClick }) => {
+const InteractiveCard: React.FC<EnhancedInteractiveCardProps> = ({
+  item,
+  index,
+  onClick,
+}) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const rotate = index % 2 === 0 ? "-1deg" : "1deg";
 
   return (
     <Card
-      className="p-4 transition-all duration-300 cursor-pointer group relative overflow-hidden"
+      className="p-4 transition-all duration-300 cursor-pointer group relative overflow-hidden transform"
       style={{
-        transform: isHovered ? "translateY(-5px)" : "none",
+        transform: `${isHovered ? "translateY(-5px)" : "none"} rotate(${rotate})`,
         boxShadow: isHovered ? "0 10px 20px rgba(255, 20, 147, 0.2)" : "none",
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -355,6 +433,16 @@ const styles = `
 const HomeScreen: React.FC = () => {
   const router = useRouter();
   const [showHearts, setShowHearts] = useState<boolean>(false);
+  const [catReaction, setCatReaction] = useState<string | null>(null);
+
+  const handleMenuClick = (route: string): void => {
+    const reactions = ["😻", "💝", "🎀", "✨"];
+    setCatReaction(reactions[Math.floor(Math.random() * reactions.length)]);
+    setTimeout(() => {
+      setCatReaction(null);
+      router.push(route);
+    }, 1000);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -368,6 +456,8 @@ const HomeScreen: React.FC = () => {
     }, 2000);
     return () => clearInterval(interval);
   }, []);
+
+  const startDate = new Date("2024-08-11T20:30:00");
 
   return (
     <>
@@ -386,6 +476,7 @@ const HomeScreen: React.FC = () => {
               semoga hari kamu indah ya sayangkuu 💖
             </p>
             <LoveQuote />
+            <FlipClock startDate={startDate} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -393,20 +484,15 @@ const HomeScreen: React.FC = () => {
               <InteractiveCard
                 key={index}
                 item={item}
-                onClick={() => router.push(item.route)}
+                index={index}
+                onClick={() => handleMenuClick(item.route)}
               />
             ))}
           </div>
 
-          <footer className="text-center py-8 mt-8 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-pink-50/50 to-transparent" />
-            <p className="text-pink-400 text-sm relative">
-              Dibuat dengan penuh cinta 💝 oleh Darriel Markerizal
-              <br />
-              untuk Nisa Fredlina Mahardika Saputri
-            </p>
-          </footer>
+          <EnhancedFooter />
         </div>
+        <CatMascot reaction={catReaction} />
       </div>
     </>
   );
