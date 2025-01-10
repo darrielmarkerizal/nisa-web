@@ -493,7 +493,7 @@ const HomeScreen: React.FC = () => {
             </div>
 
             <a
-              href="https://wa.me/85155222564?text=sayanggg%20aku%20kangen%20banget%20sama%20kamu%20sekarang%20🥺%20aku%20pen%20dimanja-manjain%20samaaa%20kamuuu%20pleasee%20fastrespp%20yaa%20sayangkuu%20aku%20butuh%20kamuuu%20sekarangg%20😭💝"
+              href="https://wa.me/6285155222564?text=sayanggg%20aku%20kangen%20banget%20sama%20kamu%20sekarang%20🥺%20aku%20pen%20dimanja-manjain%20samaaa%20kamuuu%20pleasee%20fastrespp%20yaa%20sayangkuu%20aku%20butuh%20kamuuu%20sekarangg%20😭💝"
               target="_blank"
               rel="noopener noreferrer"
               className="relative animate-pulse"
