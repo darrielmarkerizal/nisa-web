@@ -79,7 +79,7 @@ const PenguinMascot: React.FC<PenguinMascotProps> = ({ reaction }) => {
       <div className="relative">
         {/* Tooltip */}
         <div className="absolute -top-16 left-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
-          klik kalo darel lagi slow resp 🥺
+          kalo aku slow resp{" "}
         </div>
 
         {/* Click Response */}
@@ -150,7 +150,7 @@ const CatMascot: React.FC<CatMascotProps> = ({ reaction }) => {
       <div className="relative">
         {/* Tooltips */}
         <div className="absolute -top-16 right-0 bg-white px-4 py-2 rounded-lg shadow-lg text-pink-500 text-sm whitespace-nowrap animate-bounce">
-          klik kalau kamu kangen aku 🥺
+          kalo kamu kangen
         </div>
 
         {isClicked && (
