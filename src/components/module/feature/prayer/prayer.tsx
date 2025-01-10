@@ -287,63 +287,69 @@ const PrayerCompanion: React.FC = () => {
 
         {/* Quran Dialog */}
         <Dialog open={isQuranDialogOpen} onOpenChange={setIsQuranDialogOpen}>
-          <DialogContent className="max-w-[95%] sm:max-w-[85%] md:max-w-[75%] lg:max-w-[65%] h-[90vh] p-4 bg-white rounded-xl">
-            <DialogHeader className="mb-4">
-              <DialogTitle className="text-center text-pink-600 text-xl md:text-2xl">
+          <DialogContent className="max-w-[95%] sm:max-w-[85%] max-h-[90vh] flex flex-col bg-white rounded-xl p-4">
+            <DialogHeader className="flex-shrink-0">
+              <DialogTitle className="text-center text-pink-600 text-lg sm:text-xl md:text-2xl font-semibold">
                 {selectedSurah?.name?.transliteration?.id}
               </DialogTitle>
             </DialogHeader>
-            <ScrollArea className="flex-1 w-full rounded-md border p-4 h-[calc(90vh-12rem)]">
-              {selectedSurah?.verses?.map((verse) => (
-                <div
-                  key={verse.number.inSurah}
-                  className="mb-8 p-4 rounded-lg hover:bg-pink-50 transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-pink-500 font-medium">
+
+            <ScrollArea className="flex-1 w-full rounded-md border my-4 min-h-0">
+              <div className="p-4 space-y-6">
+                {selectedSurah?.verses?.map((verse) => (
+                  <div
+                    key={verse.number.inSurah}
+                    className="space-y-3 p-3 rounded-lg hover:bg-pink-50 transition-colors"
+                  >
+                    <span className="text-pink-500 font-medium text-sm sm:text-base block">
                       Ayat {verse.number.inSurah}
                     </span>
+                    <p className="text-right text-lg sm:text-xl md:text-2xl leading-relaxed">
+                      {verse.text.arab}
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      {verse.translation.id}
+                    </p>
                   </div>
-                  <p className="text-right text-2xl md:text-3xl lg:text-4xl mb-4 leading-loose">
-                    {verse.text.arab}
-                  </p>
-                  <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                    {verse.translation.id}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
               <ScrollBar />
             </ScrollArea>
-            <div className="flex justify-between items-center mt-4 gap-2">
+
+            <div className="flex justify-between items-center gap-2 mt-2 flex-shrink-0">
               <Button
                 variant="outline"
                 onClick={() =>
                   selectedSurah && handleSurahClick(selectedSurah.number - 1)
                 }
                 disabled={selectedSurah?.number === 1}
-                className="text-sm md:text-base"
+                className="text-xs sm:text-sm flex items-center"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Sebelumnya
+                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Sebelumnya</span>
+                <span className="sm:hidden">Prev</span>
               </Button>
+
               <Button
                 variant="outline"
                 onClick={() => setIsQuranDialogOpen(false)}
-                className="text-sm md:text-base"
+                className="text-xs sm:text-sm flex items-center"
               >
-                <X className="w-4 h-4 mr-2" />
+                <X className="w-4 h-4 mr-1 sm:mr-2" />
                 Tutup
               </Button>
+
               <Button
                 variant="outline"
                 onClick={() =>
                   selectedSurah && handleSurahClick(selectedSurah.number + 1)
                 }
                 disabled={selectedSurah?.number === 114}
-                className="text-sm md:text-base"
+                className="text-xs sm:text-sm flex items-center"
               >
-                Selanjutnya
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <span className="hidden sm:inline">Selanjutnya</span>
+                <span className="sm:hidden">Next</span>
+                <ArrowRight className="w-4 h-4 ml-1 sm:ml-2" />
               </Button>
             </div>
           </DialogContent>
@@ -351,36 +357,40 @@ const PrayerCompanion: React.FC = () => {
 
         {/* Dua Dialog */}
         <Dialog open={isDuaDialogOpen} onOpenChange={setIsDuaDialogOpen}>
-          <DialogContent className="max-w-[95%] sm:max-w-[85%] md:max-w-[75%] lg:max-w-[65%] h-[90vh] p-4 bg-white rounded-xl">
-            <DialogHeader className="mb-4">
-              <DialogTitle className="text-center text-pink-600 text-xl md:text-2xl">
+          <DialogContent className="max-w-[95%] sm:max-w-[85%] max-h-[90vh] flex flex-col bg-white rounded-xl p-4">
+            <DialogHeader className="flex-shrink-0">
+              <DialogTitle className="text-center text-pink-600 text-lg sm:text-xl md:text-2xl font-semibold">
                 {selectedDua?.judul}
               </DialogTitle>
             </DialogHeader>
-            <ScrollArea className="flex-1 w-full rounded-md border p-4 h-[calc(90vh-12rem)]">
-              <div className="space-y-6 p-4">
+
+            <ScrollArea className="flex-1 w-full rounded-md border my-4 min-h-0">
+              <div className="p-4 space-y-8">
                 <div className="text-center space-y-6">
-                  <p className="text-right text-2xl md:text-3xl lg:text-4xl leading-loose">
+                  <p className="text-right text-xl sm:text-2xl md:text-3xl leading-loose">
                     {selectedDua?.arab}
                   </p>
-                  <p className="text-base md:text-lg text-gray-600 italic leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-gray-600 italic leading-relaxed">
                     {selectedDua?.latin}
                   </p>
-                  <p className="text-base md:text-lg text-pink-600 leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-pink-600 leading-relaxed">
                     {selectedDua?.terjemah}
                   </p>
                 </div>
               </div>
               <ScrollBar />
             </ScrollArea>
-            <Button
-              variant="outline"
-              onClick={() => setIsDuaDialogOpen(false)}
-              className="w-full mt-4 text-sm md:text-base"
-            >
-              <X className="w-4 h-4 mr-2" />
-              Tutup
-            </Button>
+
+            <div className="flex justify-center mt-2 flex-shrink-0">
+              <Button
+                variant="outline"
+                onClick={() => setIsDuaDialogOpen(false)}
+                className="text-xs sm:text-sm flex items-center"
+              >
+                <X className="w-4 h-4 mr-1 sm:mr-2" />
+                Tutup
+              </Button>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
