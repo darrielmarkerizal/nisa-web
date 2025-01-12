@@ -19,6 +19,7 @@ import {
   CheckSquare,
   Droplet,
   LucideIcon,
+  MessageCircleHeart,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import FlipClock from "./components/flip";
@@ -464,6 +465,12 @@ const menuItems: MenuItem[] = [
     title: "digital prayer companion",
     description: "teman ibadah kita berdua",
     route: "/prayer-companion",
+  },
+  {
+    icon: MessageCircleHeart,
+    title: "love expression hub",
+    description: "kamu bisa kirim pesan sayang ke aku dengan gampang",
+    route: "/love-expression",
   },
   {
     icon: Smile,
