@@ -20,6 +20,7 @@ import {
   Droplet,
   LucideIcon,
   MessageCircleHeart,
+  Smartphone,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import FlipClock from "./components/flip";
@@ -477,6 +478,12 @@ const menuItems: MenuItem[] = [
     title: "mood analyzer",
     description: "bantu identifikasi mood kamu",
     route: "/mood-analyzer",
+  },
+  {
+    icon: Smartphone,
+    title: "virtual pet",
+    description: "penguin kecil yang bisa dirawat",
+    route: "/virtual-pet",
   },
   {
     icon: Gift,
