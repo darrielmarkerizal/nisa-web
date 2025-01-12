@@ -473,10 +473,10 @@ const menuItems: MenuItem[] = [
     route: "/love-expression",
   },
   {
-    icon: Smile,
-    title: "mood journal",
-    description: "cerita-cerita perasaan kamu",
-    route: "/mood-journal",
+    icon: Brain,
+    title: "mood analyzer",
+    description: "bantu identifikasi mood kamu",
+    route: "/mood-analyzer",
   },
   {
     icon: Gift,
