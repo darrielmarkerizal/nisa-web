@@ -486,6 +486,12 @@ const menuItems: MenuItem[] = [
     route: "/virtual-pet",
   },
   {
+    icon: Brain,
+    title: "conflict center",
+    description: "solusi untuk masalah hubungan",
+    route: "/conflict-center",
+  },
+  {
     icon: Gift,
     title: "care package creator",
     description: "kirim hadiah spesial buat kamu",
