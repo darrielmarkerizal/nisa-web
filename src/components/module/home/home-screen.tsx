@@ -21,6 +21,7 @@ import {
   LucideIcon,
   MessageCircleHeart,
   Smartphone,
+  Gamepad2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import FlipClock from "./components/flip";
@@ -484,6 +485,12 @@ const menuItems: MenuItem[] = [
     title: "virtual pet",
     description: "penguin kecil yang bisa dirawat",
     route: "/virtual-pet",
+  },
+  {
+    icon: Gamepad2,
+    title: "mini games hub",
+    description: "main game seru bareng aku",
+    route: "/mini-games",
   },
   {
     icon: Brain,
