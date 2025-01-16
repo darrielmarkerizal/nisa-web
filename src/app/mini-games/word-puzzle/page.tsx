@@ -5,6 +5,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Timer, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface WordLocation {
   word: string;
@@ -97,7 +104,6 @@ const generatePuzzle = (size: number, words: string[]) => {
     }
   });
 
-  // Fill remaining spaces with random letters
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       if (grid[y][x] === ".") {
@@ -118,6 +124,7 @@ const WordPuzzle: React.FC = () => {
   const [score, setScore] = useState(0);
   const [time, setTime] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
 
   useEffect(() => {
     const { grid, locations } = generatePuzzle(10, words);
@@ -132,18 +139,20 @@ const WordPuzzle: React.FC = () => {
     }
   }, [isGameOver]);
 
-  const handleMouseDown = (x: number, y: number) => {
+  const handleInteractionStart = (x: number, y: number) => {
     setIsDragging(true);
     setSelectedCells([[x, y]]);
   };
 
-  const handleMouseEnter = (x: number, y: number) => {
+  const handleInteractionMove = (x: number, y: number) => {
     if (isDragging) {
-      setSelectedCells((prev) => [...prev, [x, y]]);
+      if (!selectedCells.some(([sx, sy]) => sx === x && sy === y)) {
+        setSelectedCells((prev) => [...prev, [x, y]]);
+      }
     }
   };
 
-  const handleMouseUp = () => {
+  const handleInteractionEnd = () => {
     setIsDragging(false);
     if (selectedCells.length > 0) {
       checkWord(selectedCells);
@@ -202,6 +211,52 @@ const WordPuzzle: React.FC = () => {
           </p>
         </div>
 
+        {showInstructions && (
+          <AlertDialog
+            open={showInstructions}
+            onOpenChange={setShowInstructions}
+          >
+            <AlertDialogContent className="bg-white p-6 rounded-lg max-w-md">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-2xl font-bold text-pink-600 mb-4 text-center">
+                  Cara Main Puzzle Kata Sayang 💝
+                </AlertDialogTitle>
+                <AlertDialogDescription className="space-y-4">
+                  <p className="text-pink-600 text-center">Hai sayangku! 🥰</p>
+                  <div className="space-y-2">
+                    <p className="text-pink-600">
+                      Cara mainnya gampang banget kok:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2 text-pink-500">
+                      <li>
+                        Cari kata-kata tersembunyi yang ada di tabel huruf
+                      </li>
+                      <li>Klik dan geser untuk memilih huruf membentuk kata</li>
+                      <li>
+                        Kata bisa horizontal (➡️), vertikal (⬇️), atau diagonal
+                        (↘️)
+                      </li>
+                      <li>Kalau ketemu, katanya akan berubah warna hijau</li>
+                      <li>Temukan semua kata untuk menyelesaikan puzzle</li>
+                    </ul>
+                  </div>
+                  <p className="text-pink-600 text-center mt-4">
+                    Kata-kata ini adalah tentang kita berdua! 💑
+                    <br />
+                    Semangat ya sayang! Aku yakin kamu bisa! 💖
+                  </p>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <Button
+                className="w-full mt-6 bg-pink-500 hover:bg-pink-600 text-white"
+                onClick={() => setShowInstructions(false)}
+              >
+                Oke, Aku Mengerti! 💕
+              </Button>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
+
         <Card className="p-4">
           <div className="flex justify-between mb-4">
             <div className="flex space-x-4">
@@ -218,43 +273,43 @@ const WordPuzzle: React.FC = () => {
           </div>
 
           <div
-            className="grid grid-cols-10 gap-1 mb-4"
-            onMouseLeave={() => {
-              setIsDragging(false);
-              setSelectedCells([]);
-            }}
+            className="grid grid-cols-10 gap-1 mb-4 select-none touch-none"
+            onMouseLeave={handleInteractionEnd}
+            onTouchEnd={handleInteractionEnd}
+            onTouchCancel={handleInteractionEnd}
           >
             {grid.map((row, y) =>
               row.map((cell, x) => (
                 <button
                   key={`${x}-${y}`}
                   className={`
-                          w-8 h-8 sm:w-10 sm:h-10 rounded
-                          flex items-center justify-center
-                          text-sm sm:text-base font-bold
-                          transition-all duration-200
-                          ${
-                            selectedCells.some(
-                              ([sx, sy]) => sx === x && sy === y
+                    w-8 h-8 sm:w-10 sm:h-10 rounded
+                    flex items-center justify-center
+                    text-sm sm:text-base font-bold
+                    transition-all duration-200
+                    ${
+                      selectedCells.some(([sx, sy]) => sx === x && sy === y)
+                        ? "bg-pink-500 text-white"
+                        : wordLocations.some(
+                              (loc) =>
+                                loc.found &&
+                                loc.cells.some(
+                                  ([cx, cy]) => cx === x && cy === y
+                                )
                             )
-                              ? "bg-pink-500 text-white"
-                              : wordLocations.some(
-                                    (loc) =>
-                                      loc.found &&
-                                      loc.cells.some(
-                                        ([cx, cy]) => cx === x && cy === y
-                                      )
-                                  )
-                                ? "bg-green-200 text-green-700"
-                                : "bg-pink-100 text-pink-600 hover:bg-pink-200"
-                          }
-                          touch-none select-none
-                        `}
-                  onMouseDown={() => handleMouseDown(x, y)}
-                  onMouseEnter={() => handleMouseEnter(x, y)}
-                  onMouseUp={handleMouseUp}
-                  onTouchStart={() => handleMouseDown(x, y)}
+                          ? "bg-green-200 text-green-700"
+                          : "bg-pink-100 text-pink-600 hover:bg-pink-200"
+                    }
+                  `}
+                  onMouseDown={() => handleInteractionStart(x, y)}
+                  onMouseEnter={() => handleInteractionMove(x, y)}
+                  onMouseUp={handleInteractionEnd}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    handleInteractionStart(x, y);
+                  }}
                   onTouchMove={(e) => {
+                    e.preventDefault();
                     const touch = e.touches[0];
                     const element = document.elementFromPoint(
                       touch.clientX,
@@ -264,13 +319,12 @@ const WordPuzzle: React.FC = () => {
                       ?.getAttribute("data-coord")
                       ?.split(",");
                     if (coordinates) {
-                      handleMouseEnter(
+                      handleInteractionMove(
                         parseInt(coordinates[0]),
                         parseInt(coordinates[1])
                       );
                     }
                   }}
-                  onTouchEnd={handleMouseUp}
                   data-coord={`${x},${y}`}
                 >
                   {cell}
@@ -284,13 +338,13 @@ const WordPuzzle: React.FC = () => {
               <div
                 key={word}
                 className={`
-                        p-2 rounded text-center
-                        ${
-                          found
-                            ? "bg-green-100 text-green-600"
-                            : "bg-pink-100 text-pink-600"
-                        }
-                      `}
+                  p-2 rounded text-center
+                  ${
+                    found
+                      ? "bg-green-100 text-green-700"
+                      : "bg-pink-100 text-pink-600"
+                  }
+                `}
               >
                 {word}
               </div>
