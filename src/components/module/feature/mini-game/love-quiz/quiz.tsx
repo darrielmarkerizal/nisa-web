@@ -195,9 +195,9 @@ const LoveQuiz: React.FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
-
   const [showAlert, setShowAlert] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
 
   const handleAnswer = (selectedOption: number) => {
     const correct = selectedOption === questions[currentQuestion].correctAnswer;
@@ -244,146 +244,64 @@ const LoveQuiz: React.FC = () => {
         </div>
 
         <Card className="p-6">
-          {showResult && (
-            <div className="text-center space-y-6">
-              <div className="relative w-48 h-48 mx-auto">
-                {/* Cat Mascot */}
-                <div className={`absolute inset-0 animate-bounce-slow`}>
-                  <div className="absolute inset-0 bg-[#F8E6E0] rounded-full">
-                    {/* Eyes */}
-                    <div
-                      className={`
-            absolute left-1/4 top-1/3 w-6 h-${score >= 13 ? "3" : "6"}
-            bg-black rounded-full
-          `}
-                    >
-                      {score >= 17 && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      className={`
-            absolute right-1/4 top-1/3 w-6 h-${score >= 13 ? "3" : "6"}
-            bg-black rounded-full
-          `}
-                    >
-                      {score >= 17 && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Blush */}
-                    <div
-                      className={`
-            absolute left-5 top-1/2 w-4 h-2 bg-pink-300 rounded-full
-            opacity-${score >= 13 ? "80" : "40"}
-          `}
-                    />
-                    <div
-                      className={`
-            absolute right-5 top-1/2 w-4 h-2 bg-pink-300 rounded-full
-            opacity-${score >= 13 ? "80" : "40"}
-          `}
-                    />
-
-                    {/* Mouth */}
-                    <div
-                      className={`
-            absolute left-1/2 top-[55%] -translate-x-1/2
-            w-8 h-4 border-b-2
-            ${
-              score >= 13
-                ? "border-pink-400 rounded-b-full"
-                : "border-gray-400 rounded-t-full"
-            }
-          `}
-                    />
-                  </div>
-
-                  {/* Score Effects */}
-                  {score >= 17 && (
-                    <>
-                      <div className="absolute -top-6 -right-4 text-2xl animate-bounce">
-                        ❤️
-                      </div>
-                      <div className="absolute -top-4 -left-4 text-2xl animate-pulse">
-                        ✨
-                      </div>
-                      <div className="absolute -bottom-2 -right-4 text-2xl animate-spin-slow">
-                        💝
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-pink-600">
-                  Quiz Selesai!{" "}
-                  {
-                    scoreTiers.find(
-                      (tier) => score >= tier.range[0] && score <= tier.range[1]
-                    )?.emoji
-                  }
-                </h2>
-
-                <div className="relative w-full h-4 bg-pink-100 rounded-full overflow-hidden">
+          {!showResult ? (
+            <div className="space-y-6">
+              <div className="text-center">
+                <p className="text-sm text-pink-400 mb-2">
+                  Pertanyaan {currentQuestion + 1} dari {questions.length}
+                </p>
+                <div className="w-full bg-pink-100 rounded-full h-2 mb-4">
                   <div
-                    className="absolute left-0 top-0 h-full bg-pink-500 transition-all duration-1000"
-                    style={{ width: `${(score / questions.length) * 100}%` }}
+                    className="bg-pink-500 h-2 rounded-full transition-all"
+                    style={{
+                      width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+                    }}
                   />
                 </div>
+                <h2 className="text-xl font-medium text-pink-600 mb-6">
+                  {questions[currentQuestion].question}
+                </h2>
+              </div>
 
-                <p className="text-xl text-pink-500">
-                  Skor kamu: {score} dari {questions.length}
-                </p>
-
-                <p className="text-pink-400 max-w-md mx-auto">
-                  {
-                    scoreTiers.find(
-                      (tier) => score >= tier.range[0] && score <= tier.range[1]
-                    )?.message
-                  }
-                </p>
-
-                <Button
-                  className="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white"
-                  onClick={restartQuiz}
-                >
-                  Main Lagi
-                </Button>
+              <div className="grid gap-3">
+                {questions[currentQuestion].options.map((option, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    className="w-full text-left justify-start py-6 text-pink-600 hover:bg-pink-50"
+                    onClick={() => handleAnswer(index)}
+                  >
+                    {option}
+                  </Button>
+                ))}
               </div>
             </div>
-          )}{" "}
-          : (
-          <div className="text-center space-y-6">
-            <Heart className="w-16 h-16 text-pink-500 mx-auto animate-pulse" />
-            <h2 className="text-2xl font-bold text-pink-600">
-              Quiz Selesai! 🎉
-            </h2>
-            <p className="text-xl text-pink-500">
-              Skor kamu: {score} dari {questions.length}
-            </p>
-            <p className="text-pink-400">
-              {score === questions.length
-                ? "Wah kamu paham banget tentang aku! 🥰"
-                : score >= questions.length / 2
-                  ? "Lumayan juga ya pengetahuanmu! 😊"
-                  : "Yuk belajar lebih banyak tentang aku! 💕"}
-            </p>
-            <Button
-              className="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white"
-              onClick={restartQuiz}
-            >
-              Main Lagi
-            </Button>
-          </div>
-          )
+          ) : (
+            <div className="text-center space-y-6">
+              <Heart className="w-16 h-16 text-pink-500 mx-auto animate-pulse" />
+              <h2 className="text-2xl font-bold text-pink-600">
+                Quiz Selesai! 🎉
+              </h2>
+              <p className="text-xl text-pink-500">
+                Skor kamu: {score} dari {questions.length}
+              </p>
+              <p className="text-pink-400">
+                {score === questions.length
+                  ? "Wah kamu paham banget tentang aku! 🥰"
+                  : score >= questions.length / 2
+                    ? "Lumayan juga ya pengetahuanmu! 😊"
+                    : "Yuk belajar lebih banyak tentang aku! 💕"}
+              </p>
+              <Button
+                className="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white"
+                onClick={restartQuiz}
+              >
+                Main Lagi
+              </Button>
+            </div>
+          )}
         </Card>
+
         <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
           <AlertDialogContent className="bg-white p-6 rounded-lg max-w-sm mx-auto">
             <div className="text-center space-y-4">
@@ -391,50 +309,43 @@ const LoveQuiz: React.FC = () => {
               <div className="relative w-40 h-40 mx-auto">
                 <div
                   className={`
-                absolute inset-0
-                transition-all duration-500 transform
-                ${isCorrect ? "scale-110" : "scale-95"}
-              `}
+                    absolute inset-0
+                    transition-all duration-500 transform
+                    ${isCorrect ? "scale-110" : "scale-95"}
+                  `}
                 >
                   {/* Cat Face */}
                   <div className="absolute inset-0 bg-[#F8E6E0] rounded-full">
                     {/* Eyes */}
                     <div
                       className={`
-                    absolute left-1/4 top-1/3 w-6 h-${isCorrect ? "3" : "6"}
-                    bg-black rounded-full transition-all duration-300
-                  `}
+                        absolute left-1/4 top-1/3 w-6 h-${isCorrect ? "3" : "6"}
+                        bg-black rounded-full transition-all duration-300
+                      `}
                     />
                     <div
                       className={`
-                    absolute right-1/4 top-1/3 w-6 h-${isCorrect ? "3" : "6"}
-                    bg-black rounded-full transition-all duration-300
-                  `}
+                        absolute right-1/4 top-1/3 w-6 h-${isCorrect ? "3" : "6"}
+                        bg-black rounded-full transition-all duration-300
+                      `}
                     />
 
                     {/* Blush */}
                     <div className="absolute left-5 top-1/2 w-4 h-2 bg-pink-300 rounded-full opacity-60" />
                     <div className="absolute right-5 top-1/2 w-4 h-2 bg-pink-300 rounded-full opacity-60" />
 
-                    {/* Nose */}
-                    <div className="absolute left-1/2 top-[45%] -translate-x-1/2 w-3 h-2 bg-pink-400 rounded-full" />
-
                     {/* Mouth */}
                     <div
                       className={`
-                    absolute left-1/2 top-[55%] -translate-x-1/2
-                    w-8 h-4 border-b-2
-                    ${isCorrect ? "border-pink-400 rounded-b-full" : "border-gray-400 rounded-t-full"}
-                    transition-all duration-300
-                  `}
+                        absolute left-1/2 top-[55%] -translate-x-1/2
+                        w-8 h-4 border-b-2
+                        ${isCorrect ? "border-pink-400 rounded-b-full" : "border-gray-400 rounded-t-full"}
+                        transition-all duration-300
+                      `}
                     />
-
-                    {/* Ears */}
-                    <div className="absolute -top-4 -left-2 w-8 h-8 bg-[#F8E6E0] rounded-full transform -rotate-45" />
-                    <div className="absolute -top-4 -right-2 w-8 h-8 bg-[#F8E6E0] rounded-full transform rotate-45" />
                   </div>
 
-                  {/* Animation Elements */}
+                  {/* Effects */}
                   {isCorrect && (
                     <>
                       <div className="absolute -top-6 -right-4 text-2xl animate-bounce">
@@ -462,10 +373,10 @@ const LoveQuiz: React.FC = () => {
 
               <Button
                 className={`
-                w-full mt-4
-                ${isCorrect ? "bg-pink-500 hover:bg-pink-600" : "bg-gray-500 hover:bg-gray-600"}
-                text-white
-              `}
+                  w-full mt-4
+                  ${isCorrect ? "bg-pink-500 hover:bg-pink-600" : "bg-gray-500 hover:bg-gray-600"}
+                  text-white
+                `}
                 onClick={handleNextQuestion}
               >
                 Lanjut
