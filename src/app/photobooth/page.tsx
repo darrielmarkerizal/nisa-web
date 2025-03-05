@@ -545,22 +545,22 @@ const Photobooth: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white p-4 sm:p-8">
-            <div className="max-w-4xl mx-auto space-y-6">
+        <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white p-2 sm:p-8">
+            <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
                 <Button
                     variant="ghost"
-                    className="mb-4 text-pink-600 hover:text-pink-700 hover:bg-pink-50"
+                    className="mb-2 sm:mb-4 text-pink-600 hover:text-pink-700 hover:bg-pink-50"
                     onClick={() => router.push("/")}
                 >
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Kembali
                 </Button>
 
-                <div className="text-center space-y-4">
-                    <h1 className="text-3xl font-bold text-pink-600">
+                <div className="text-center space-y-2 sm:space-y-4">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-pink-600">
                         love photobooth 📸
                     </h1>
-                    <p className="text-pink-400">
+                    <p className="text-sm sm:text-base text-pink-400">
                         abadikan momen spesial kita berdua
                     </p>
                 </div>
@@ -583,8 +583,8 @@ const Photobooth: React.FC = () => {
                     </TabsList>
 
                     <TabsContent value="capture">
-                        <Card className="p-6 overflow-hidden">
-                            <div className="space-y-6">
+                        <Card className="p-3 sm:p-6 overflow-hidden">
+                            <div className="space-y-4 sm:space-y-6">
                                 <div className="relative w-full rounded-lg overflow-hidden bg-black shadow-lg">
                                     {/* Countdown Overlay */}
                                     {countdown !== null && (
@@ -608,40 +608,47 @@ const Photobooth: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col space-y-4">
-                                    <div className="flex justify-between items-center">
+                                <div className="flex flex-col space-y-3 sm:space-y-4">
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                                         <Button
                                             variant="outline"
-                                            className="text-pink-600 border-pink-200 hover:bg-pink-50"
+                                            size="sm"
+                                            className="text-pink-600 border-pink-200 hover:bg-pink-50 text-xs sm:text-sm"
                                             onClick={() =>
                                                 setIsMirror(!isMirror)
                                             }
                                         >
-                                            <RefreshCcw className="w-4 h-4 mr-2" />
+                                            <RefreshCcw className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                                             {isMirror
                                                 ? "Nonaktifkan"
                                                 : "Aktifkan"}{" "}
                                             Cermin
                                         </Button>
 
-                                        <div className="flex space-x-2">
+                                        <div className="flex gap-2">
                                             <Button
                                                 variant="outline"
-                                                className="text-pink-600 border-pink-200 hover:bg-pink-50"
+                                                size="sm"
+                                                className="text-pink-600 border-pink-200 hover:bg-pink-50 text-xs sm:text-sm flex-1 sm:flex-auto"
                                                 onClick={startCountdown}
                                                 disabled={isCapturing}
                                             >
-                                                <Camera className="w-4 h-4 mr-2" />
-                                                Ambil 1 Foto
+                                                <Camera className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                                                <span className="whitespace-nowrap">
+                                                    Ambil 1 Foto
+                                                </span>
                                             </Button>
                                             <Button
-                                                className="bg-pink-500 hover:bg-pink-600 text-white"
+                                                size="sm"
+                                                className="bg-pink-500 hover:bg-pink-600 text-white text-xs sm:text-sm flex-1 sm:flex-auto"
                                                 onClick={startStripCapture}
                                                 disabled={isCapturing}
                                             >
-                                                <Camera className="w-4 h-4 mr-2" />
-                                                Ambil {selectedLayout.count}{" "}
-                                                Foto Berturut-turut
+                                                <Camera className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                                                <span className="whitespace-nowrap">
+                                                    Ambil {selectedLayout.count}{" "}
+                                                    Foto
+                                                </span>
                                             </Button>
                                         </div>
                                     </div>
@@ -671,11 +678,11 @@ const Photobooth: React.FC = () => {
                                     </div>
 
                                     {/* Layout selection for strip photos */}
-                                    <div className="bg-pink-50 p-4 rounded-lg space-y-3">
-                                        <h3 className="text-pink-600 font-medium">
+                                    <div className="bg-pink-50 p-2 sm:p-4 rounded-lg space-y-2 sm:space-y-3">
+                                        <h3 className="text-sm sm:text-base text-pink-600 font-medium">
                                             Pilih Jumlah Foto:
                                         </h3>
-                                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                                        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                                             {layouts.map((layout) => (
                                                 <button
                                                     key={layout.id}
@@ -700,7 +707,7 @@ const Photobooth: React.FC = () => {
 
                                 {/* Preview of captured photos */}
                                 {photos.length > 0 && (
-                                    <div className="space-y-3">
+                                    <div className="space-y-2 sm:space-y-3">
                                         <div className="flex justify-between items-center">
                                             <h3 className="text-pink-600 font-medium">
                                                 Foto yang Diambil (
@@ -745,22 +752,22 @@ const Photobooth: React.FC = () => {
                     </TabsContent>
 
                     <TabsContent value="layout">
-                        <Card className="p-6">
-                            <div className="space-y-6">
-                                <h2 className="text-xl font-semibold text-pink-600">
+                        <Card className="p-3 sm:p-6">
+                            <div className="space-y-4 sm:space-y-6">
+                                <h2 className="text-lg sm:text-xl font-semibold text-pink-600">
                                     Pilih Frame & Layout 🖼️
                                 </h2>
 
                                 {/* Frame selection */}
-                                <div className="space-y-4">
-                                    <h3 className="text-pink-600 font-medium">
+                                <div className="space-y-2 sm:space-y-4">
+                                    <h3 className="text-sm sm:text-base text-pink-600 font-medium">
                                         Frame:
                                     </h3>
-                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3">
                                         {frames.map((frame) => (
                                             <button
                                                 key={frame.id}
-                                                className={`p-3 rounded-lg border-2 h-24 flex items-center justify-center transition-all ${
+                                                className={`p-2 sm:p-3 rounded-lg border-2 h-16 sm:h-24 flex items-center justify-center transition-all ${
                                                     selectedFrame.id ===
                                                     frame.id
                                                         ? "border-pink-500"
@@ -837,27 +844,27 @@ const Photobooth: React.FC = () => {
                     </TabsContent>
 
                     <TabsContent value="stickers">
-                        <Card className="p-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-6">
-                                    <h2 className="text-xl font-semibold text-pink-600">
+                        <Card className="p-3 sm:p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                                <div className="space-y-4 sm:space-y-6">
+                                    <h2 className="text-lg sm:text-xl font-semibold text-pink-600">
                                         Tambahkan Stiker ✨
                                     </h2>
 
                                     {/* Sticker selection */}
-                                    <div className="grid grid-cols-4 gap-2">
+                                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                         {stickers.map((sticker) => (
                                             <button
                                                 key={sticker.id}
-                                                className="p-3 rounded-lg border border-pink-200 hover:bg-pink-50 transition-all text-center"
+                                                className="p-2 sm:p-3 rounded-lg border border-pink-200 hover:bg-pink-50 transition-all text-center"
                                                 onClick={() =>
                                                     addSticker(sticker.id)
                                                 }
                                             >
-                                                <span className="text-2xl">
+                                                <span className="text-xl sm:text-2xl">
                                                     {sticker.emoji}
                                                 </span>
-                                                <p className="text-xs text-pink-500 mt-1">
+                                                <p className="text-[10px] sm:text-xs text-pink-500 mt-1">
                                                     {sticker.label}
                                                 </p>
                                             </button>
@@ -1009,8 +1016,8 @@ const Photobooth: React.FC = () => {
                                     )}
                                 </div>
 
-                                <div className="space-y-6">
-                                    <h2 className="text-xl font-semibold text-pink-600">
+                                <div className="space-y-4 sm:space-y-6">
+                                    <h2 className="text-lg sm:text-xl font-semibold text-pink-600">
                                         Preview & Download 💾
                                     </h2>
 
@@ -1113,13 +1120,13 @@ const Photobooth: React.FC = () => {
 
                                     {/* Download button */}
                                     <Button
-                                        className="w-full bg-pink-500 hover:bg-pink-600 text-white py-3"
+                                        className="w-full bg-pink-500 hover:bg-pink-600 text-white py-2 sm:py-3 text-sm sm:text-base"
                                         onClick={generatePhotoStrip}
                                         disabled={
                                             photos.length < selectedLayout.count
                                         }
                                     >
-                                        <Download className="w-4 h-4 mr-2" />
+                                        <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                                         Download Photo Strip
                                     </Button>
 
