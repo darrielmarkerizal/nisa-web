@@ -5,119 +5,413 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 240 10% 3.9%;
+        --chart-1: 12 76% 61%;
+        --chart-2: 173 58% 39%;
+        --chart-3: 197 37% 24%;
+        --chart-4: 43 74% 66%;
+        --chart-5: 27 87% 67%;
+        --radius: 0.5rem;
+    }
+    .dark {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }
 
 @keyframes flip {
-  0% {
-    transform: rotateX(0);
-  }
-  100% {
-    transform: rotateX(360deg);
-  }
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+    }
 }
 
 .animate-flip {
-  animation: flip 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
+    animation: flip 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
 }
 
 @keyframes wave {
-  0%,
-  100% {
-    transform: rotate(12deg);
-  }
-  50% {
-    transform: rotate(-12deg);
-  }
+    0%,
+    100% {
+        transform: rotate(12deg);
+    }
+    50% {
+        transform: rotate(-12deg);
+    }
 }
 
 @keyframes bounce-subtle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .animate-bounce-subtle {
-  animation: bounce-subtle 2s infinite;
+    animation: bounce-subtle 2s infinite;
+}
+
+@keyframes idle-body {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes idle-tail {
+    0%,
+    100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes sleep-pose {
+    0% {
+        transform: scale(1) rotate(0);
+    }
+    50% {
+        transform: scale(1.02) rotate(2deg);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes eat-pose {
+    0% {
+        transform: translateY(0) rotate(0);
+    }
+    25% {
+        transform: translateY(2px) rotate(-2deg);
+    }
+    75% {
+        transform: translateY(2px) rotate(2deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@keyframes bath-shake {
+    0%,
+    100% {
+        transform: rotate(0) translateX(0);
+    }
+    25% {
+        transform: rotate(-3deg) translateX(-2px);
+    }
+    75% {
+        transform: rotate(3deg) translateX(2px);
+    }
+}
+
+@keyframes paw-movement {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes ear-twitch {
+    0%,
+    90%,
+    100% {
+        transform: rotate(0);
+    }
+    95% {
+        transform: rotate(-5deg);
+    }
+}
+
+@keyframes blink {
+    0%,
+    90%,
+    100% {
+        transform: scaleY(1);
+    }
+    95% {
+        transform: scaleY(0.1);
+    }
+}
+
+@keyframes purr {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+}
+
+.cat-idle {
+    animation: idle-body 3s ease-in-out infinite;
+}
+
+.cat-idle .cat-tail {
+    animation: idle-tail 4s ease-in-out infinite;
+    transform-origin: 20% 80%;
+}
+
+.cat-idle .cat-ears {
+    animation: ear-twitch 6s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+.cat-sleeping {
+    animation: sleep-pose 4s ease-in-out infinite;
+}
+
+.cat-sleeping .cat-body {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.cat-eating {
+    animation: eat-pose 1s ease-in-out infinite;
+}
+
+.cat-eating .cat-head {
+    animation: eat-pose 0.5s ease-in-out infinite;
+}
+
+.cat-bathing {
+    animation: bath-shake 1s ease-in-out infinite;
+}
+
+.cat-bathing .cat-fur {
+    opacity: 0.8;
+}
+
+.cat-body {
+    fill: #ffa500;
+    stroke: #8b4513;
+    stroke-width: 2;
+}
+
+.cat-fur-pattern {
+    fill: #8b4513;
+    opacity: 0.2;
+}
+
+.cat-head {
+    fill: #ffa500;
+    stroke: #8b4513;
+    stroke-width: 2;
+}
+
+.cat-ears {
+    fill: #8b4513;
+}
+
+.cat-eyes {
+    animation: blink 4s ease-in-out infinite;
+}
+
+.cat-nose {
+    fill: #8b4513;
+}
+
+.cat-whiskers {
+    stroke: #8b4513;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+}
+
+.cat-paws {
+    fill: #8b4513;
+    animation: paw-movement 2s ease-in-out infinite alternate;
+}
+
+.status-effect {
+    position: absolute;
+    font-size: 2rem;
+    pointer-events: none;
+    animation: float 2s ease-in-out infinite;
+}
+
+.love-effect {
+    color: #ff69b4;
+}
+
+.food-effect {
+    color: #ffa500;
+}
+
+.bath-effect {
+    color: #87ceeb;
+}
+
+.sleep-effect {
+    color: #9370db;
+}
+
+.cat-interactive {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cat-interactive:hover {
+    transform: scale(1.02);
+}
+
+.status-bar {
+    height: 0.5rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: #f3f4f6;
+    transition: all 0.3s ease;
+}
+
+.status-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.happiness-bar {
+    background: #ff69b4;
+}
+.hunger-bar {
+    background: #ffa500;
+}
+.cleanliness-bar {
+    background: #87ceeb;
+}
+.energy-bar {
+    background: #9370db;
+}
+
+.action-button {
+    @apply rounded-full p-4 transition-all duration-300;
+}
+
+.action-button:hover:not(:disabled) {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+
+.action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.environment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.hearts {
+    position: absolute;
+    animation: float 3s ease-in-out infinite;
+    color: #ff69b4;
+    opacity: 0.6;
+}
+
+.bubbles {
+    position: absolute;
+    animation: float 2s ease-in-out infinite;
+    color: #87ceeb;
+    opacity: 0.6;
+}
+
+.zzz {
+    position: absolute;
+    animation: float 4s ease-in-out infinite;
+    color: #9370db;
+    opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+    .cat-container {
+        transform: scale(0.8);
+    }
+
+    .status-bar {
+        height: 0.4rem;
+    }
+
+    .action-button {
+        padding: 0.75rem;
+    }
 }
