@@ -567,18 +567,32 @@ const Photobooth: React.FC = () => {
 
                 <Tabs defaultValue="capture" className="w-full">
                     <TabsList className="grid w-full grid-cols-3 bg-pink-50">
-                        <TabsTrigger value="capture">Ambil Foto 📸</TabsTrigger>
+                        <TabsTrigger
+                            value="capture"
+                            className="px-1 sm:px-2 text-xs sm:text-sm py-1.5 sm:py-2"
+                        >
+                            <span className="hidden xs:inline">Ambil Foto</span>
+                            <span className="xs:hidden">Foto</span> 📸
+                        </TabsTrigger>
                         <TabsTrigger
                             value="layout"
                             disabled={photos.length === 0}
+                            className="px-1 sm:px-2 text-xs sm:text-sm py-1.5 sm:py-2"
                         >
-                            Layout & Frame 🖼️
+                            <span className="hidden xs:inline">
+                                Layout & Frame
+                            </span>
+                            <span className="xs:hidden">Layout</span> 🖼️
                         </TabsTrigger>
                         <TabsTrigger
                             value="stickers"
                             disabled={photos.length === 0}
+                            className="px-1 sm:px-2 text-xs sm:text-sm py-1.5 sm:py-2"
                         >
-                            Stiker & Download ✨
+                            <span className="hidden xs:inline">
+                                Stiker & Download
+                            </span>
+                            <span className="xs:hidden">Stiker</span> ✨
                         </TabsTrigger>
                     </TabsList>
 
