@@ -558,10 +558,11 @@ const Photobooth: React.FC = () => {
 
                 <div className="text-center space-y-2 sm:space-y-4">
                     <h1 className="text-2xl sm:text-3xl font-bold text-pink-600">
-                        love photobooth 📸
+                        nisa&apos;s love photobooth 📸
                     </h1>
                     <p className="text-sm sm:text-base text-pink-400">
-                        abadikan momen spesial kita berdua
+                        abadikan momen spesial kita berdua, nisayangnyaa darell
+                        💕
                     </p>
                 </div>
 
